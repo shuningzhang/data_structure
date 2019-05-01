@@ -2,17 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-struct bitree_node {
-	int b_data;
-	struct bitree_node *left;
-	struct bitree_node *right;
-};
-
-struct bitree {
-	int size;
-	struct bitree_node *root;
-};
+#include "bitree.h"
 
 void bitree_rem_left(struct bitree *tree, struct bitree_node *node);
 void bitree_rem_right(struct bitree *tree, struct bitree_node *node);
