@@ -5,9 +5,12 @@
 #include "list.h"
 
 
-void list_init(struct list *list)
+void list_init(struct list *list, 
+	       void (*print_node)(void *data))
 {
 	list->size = 0;
+	list->print_node = print_node;
+
 	list->head = NULL;
 	list->tail = NULL;
 	return;
@@ -22,7 +25,7 @@ void list_destroy(struct list *list)
  * 在链表头部插入一个新元素。 */
 int list_insert_next(struct list *list, 
 		     struct list_node *node,
-		     int data)
+		     void *data)
 {
 	struct list_node *new_node;
 
@@ -58,7 +61,7 @@ int list_insert_next(struct list *list,
  * 移除链表头元素。data存储已经移除的元素的数据。*/
 int list_rem_next(struct list *list,
 		  struct list_node *node,
-		  int *data)
+		  void **data)
 {
 	struct list_node *tmp;
 
@@ -89,17 +92,18 @@ int list_rem_next(struct list *list,
 	return 0;
 }
 
-void list_print(struct list* list)
+void list_traversal(struct list* list)
 {
 	struct list_node *tmp;
 	
 	tmp = list->head;
 	while (tmp) {
-		printf("%d ", tmp->data);
+		if (list->print_node) {
+			list->print_node(tmp->data);
+		}
 		tmp = tmp->next;
 	}
 
 	printf("\n");
 }
-
 
