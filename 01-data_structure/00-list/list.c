@@ -66,6 +66,7 @@ int list_rem_next(struct list *list,
 	struct list_node *tmp;
 
 	if (NULL == list || list_size(list) == 0) {
+		*data = NULL;
 		return -1;
 	}
 
@@ -85,6 +86,7 @@ int list_rem_next(struct list *list,
 			list->tail = node;
 	}
 
+	list->size --;
 	*data = tmp->data;
 	free(tmp);
 	tmp = NULL;

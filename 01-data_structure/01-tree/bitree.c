@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "bitree.h"
+#include "../02-stack/stack.h"
 
 void bitree_rem_left(struct bitree *tree, struct bitree_node *node);
 void bitree_rem_right(struct bitree *tree, struct bitree_node *node);
@@ -204,24 +205,23 @@ int bitree_preorder(struct bitree_node *node)
 	return 0;
 }
 
-struct bitree tree;
-int init_tree()
+/* 非递归方式进行前序遍历 */
+int bitree_preorder_ex(struct bitree_node *node)
 {
-	bitree_init(&tree);	
-	
-	bitree_insert_left(&tree, NULL, 1);
-	bitree_insert_left(&tree, tree.root, 2);
-	bitree_insert_right(&tree, tree.root, 3);
-	
-	bitree_insert_left(&tree, tree.root->left, 4);
-	bitree_insert_right(&tree, tree.root->left, 5);
-	
-	bitree_insert_left(&tree, tree.root->right, 6);
+	struct bitree_node *tmp_node;
+	struct stack stack;	
+	stack_init(&stack);
+
+	stack_push(&stack, node);
+	stack_pop(&stack, (void **)&tmp_node);
+	while(tmp_node) {
+		printf("%d ", tmp_node->b_data);
+		
+		if (tmp_node->right)
+			stack_push(&stack, tmp_node->right);
+		if (tmp_node->left)
+			stack_push(&stack, tmp_node->left);
+		stack_pop(&stack, (void **)&tmp_node);
+	}
 }
 
-int main()
-{
-	init_tree();
-	bitree_preorder(tree.root);
-	return 0;
-}
