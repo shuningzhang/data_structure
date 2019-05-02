@@ -23,9 +23,9 @@ struct list
 
 #define list_size(list) ((list)->size)
 #define list_head(list) ((list)->head)
+#define list_tail(list) ((list)->tail)
 
 #define list_next(node) ((node)->next)
-
 
 int list_insert_next(struct list *list, struct list_node *node, void *data);
 int list_rem_next(struct list *list, struct list_node *node, void **data);
