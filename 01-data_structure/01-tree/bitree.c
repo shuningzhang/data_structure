@@ -4,6 +4,7 @@
 
 #include "bitree.h"
 #include "../02-stack/stack.h"
+#include "../03-queue/queue.h"
 
 void bitree_rem_left(struct bitree *tree, struct bitree_node *node);
 void bitree_rem_right(struct bitree *tree, struct bitree_node *node);
@@ -223,5 +224,32 @@ int bitree_preorder_ex(struct bitree_node *node)
 			stack_push(&stack, tmp_node->left);
 		stack_pop(&stack, (void **)&tmp_node);
 	}
+}
+
+
+/* 二叉树的层序遍历，也就是逐层进行遍历，从做向右 */
+void bitree_levelorder(struct bitree_node *node)
+{
+	struct bitree_node *tmp_data;
+	struct queue queue;
+
+	queue_init(&queue);
+
+	queue_enqueue(&queue, node);
+	while(queue_size(&queue)) {
+		queue_dequeue(&queue, (void **)&tmp_data);	
+
+		printf("%d \n", tmp_data->b_data);
+
+		if (tmp_data->left) {
+			queue_enqueue(&queue, tmp_data->left);
+		}
+		
+		if (tmp_data->right) {
+			queue_enqueue(&queue, tmp_data->right);
+		}
+
+	}
+
 }
 
